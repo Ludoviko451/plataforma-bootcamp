@@ -1,12 +1,16 @@
 package com.pragma.arquetipobootcamp2024.domain.api.usecase;
 
 
+import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
 import com.pragma.arquetipobootcamp2024.domain.api.ITecnologiaServicePort;
 import com.pragma.arquetipobootcamp2024.domain.exception.*;
 import com.pragma.arquetipobootcamp2024.domain.model.Tecnologia;
 import com.pragma.arquetipobootcamp2024.domain.spi.ITecnologiaPersistencePort;
 
 import java.util.List;
+
+//  Clase que implementa la lógica de negocio relacionada con las operaciones de tecnología.
+// Utiliza el puerto de persistencia para interactuar con la capa de almacenamiento de datos.
 
 public class TecnologiaUseCase implements ITecnologiaServicePort {
     private final ITecnologiaPersistencePort tecnologiaPersistencePort;
@@ -16,34 +20,32 @@ public class TecnologiaUseCase implements ITecnologiaServicePort {
     }
 
 
-    @Override
     public void saveTecnologia(Tecnologia tecnologia) {
+        // Verificar si el nombre y la descripción son válidos
+//        if (tecnologia.getNombre() == null || tecnologia.getNombre().isEmpty()) {
+//            throw new NombreTecnologiaRequeridoException();
+//        }
+//        if (tecnologia.getDescripcion() == null || tecnologia.getDescripcion().isEmpty()) {
+//            throw new DescripcionTecnologiaRequeridoException();
+//        }
+//        if (tecnologia.getNombre().length() > 50) {
+//            throw new NombreExcedeLongitudMaximaException();
+//        }
+//        if (tecnologia.getDescripcion().length() > 90) {
+//            throw new DescripcionExcedeLongitudMaximaException();
+//        }
 
-        if (tecnologia.getNombre() == null || tecnologia.getNombre().isEmpty()) {
+        // Verificar si la tecnología ya existe en la base de datos
+        if (tecnologiaPersistencePort.findByName(tecnologia.getNombre()) != null) {
+            // Log de depuración
+            throw new TechnologyAlreadyExistsException();
+        }
 
-            throw new NombreTecnologiaRequeridoException();
-        }
-        if (tecnologia.getDescripcion() == null || tecnologia.getDescripcion().isEmpty()) {
-
-            throw new DescripcionTecnologiaRequeridoException();
-        }
-        if (tecnologia.getNombre().length() > 50) {
-            throw new NombreExcedeLongitudMaximaException();
-        }
-        if (tecnologia.getDescripcion().length() > 90) {
-            throw new DescripcionExcedeLongitudMaximaException();
-        }
+        // Guardar la tecnología si todo está correcto
         tecnologiaPersistencePort.saveTecnologia(tecnologia);
     }
 
-    @Override
-    public Tecnologia findByName(String nombre) {
-        Tecnologia tecnologia = tecnologiaPersistencePort.findByName(nombre);
-        if (tecnologia != null) {
-            throw new TecnologiaPresenteException();
-        }
-        return tecnologia;
-    }
+
 
     @Override
     public List<Tecnologia> getAllTecnologias(Integer page, Integer size, String sortBy) {

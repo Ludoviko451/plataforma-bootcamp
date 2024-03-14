@@ -4,7 +4,7 @@ import com.pragma.arquetipobootcamp2024.domain.model.Product;
 import com.pragma.arquetipobootcamp2024.domain.model.Tecnologia;
 
 import java.util.List;
-
+// Interfaz para operaciones relacionadas con las tecnologías
 public interface ITecnologiaPersistencePort {
 
     void saveTecnologia(Tecnologia tecnologia);
@@ -13,5 +13,4 @@ public interface ITecnologiaPersistencePort {
 
     List<Tecnologia> getAllTecnologias(Integer page, Integer size, String sortBy);
 
-//    List<Tecnologia> getAllTecnologias();
 }

@@ -1,20 +1,20 @@
 package com.pragma.arquetipobootcamp2024.configuration.exceptionhandler;
 
-import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.ElementNotFoundException;
-import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
-import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.ProductAlreadyExistsException;
-import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.SupplierAlreadyExistsException;
-import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.SupplierNotFoundException;
+import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.*;
 import com.pragma.arquetipobootcamp2024.configuration.Constants;
 import com.pragma.arquetipobootcamp2024.domain.exception.EmptyFieldException;
 import com.pragma.arquetipobootcamp2024.domain.exception.NegativeNotAllowedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 @RequiredArgsConstructor
@@ -37,6 +37,12 @@ public class ControllerAdvisor {
                 HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
     }
 
+    @ExceptionHandler(TechnologyAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> handleTechnologyAlreadyExistsException(TechnologyAlreadyExistsException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.TECHNOLOGY_ALREADY_EXISTS_EXCEPTION_MESSAGE, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
+
     @ExceptionHandler(NoDataFoundException.class)
     public ResponseEntity<ExceptionResponse> handleNoDataFoundException() {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
@@ -56,5 +62,26 @@ public class ControllerAdvisor {
     public ResponseEntity<ExceptionResponse> handleSupplierNotFoundException() {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
                 Constants.SUPPLIER_NOT_FOUND_EXCEPTION_MESSAGE, HttpStatus.CONFLICT.toString(), LocalDateTime.now()));
+    }
+
+
+    // Este método maneja las excepciones del tipo MethodArgumentNotValidException, que son lanzadas
+    // cuando falla la validación de los argumentos de un método, por ejemplo, los parámetros de
+    // un controlador Spring que se validan utilizando anotaciones como @Valid.
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST);
+
+        Map<String, String> errors = ex.getBindingResult().getFieldErrors().stream()
+                .collect(Collectors.toMap(
+                        error -> error.getField(),
+                        error -> error.getDefaultMessage()
+                ));
+
+        body.put("errors", errors);
+
+        return ResponseEntity.badRequest().body(body);
     }
 }

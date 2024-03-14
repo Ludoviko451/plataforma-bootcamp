@@ -1,7 +1,9 @@
 package com.pragma.arquetipobootcamp2024.domain.model;
 //"-Cada tecnologia tiene 3 campos: id,nombre y direccion
 
-
+//esta clase representa una entidad llamada Tecnologia que tiene tres atributos:
+//id, nombre y descripción, y proporciona métodos para acceder a estos atributos.
+//Este tipo de clase es comúnmente utilizada para modelar objetos en el dominio de una aplicación.
 
 public class Tecnologia {
 

@@ -2,7 +2,7 @@ package com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.adapter;
 
 
 import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.entity.TecnologiaEntity;
-import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
+
 import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.mapper.ITecnologiaEntityMapper;
 import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.repository.ITecnologiaRepository;
 import com.pragma.arquetipobootcamp2024.domain.model.Product;
@@ -15,6 +15,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+
+
+// Adaptador que implementa el puerto de persistencia de tecnologías.
+// Utiliza Spring Data JPA para interactuar con la base de datos MySQL.
+
+//La anotación Spring Component se utiliza para indicar una clase como componente. Significa que Spring detectará automáticamente
+//estas clases para la inyección de dependencia cuando se utilice la configuración basada en anotaciones y el escaneo de classpath.
 @Component
 public class TecnologiaAdapter implements ITecnologiaPersistencePort {
 
@@ -28,6 +35,8 @@ public class TecnologiaAdapter implements ITecnologiaPersistencePort {
 
     @Override
     public void saveTecnologia(Tecnologia tecnologia) {
+
+
         tecnologiaRepository.save(tecnologiaEntityMapper.toEntity(tecnologia));
     }
 
@@ -55,11 +64,5 @@ public class TecnologiaAdapter implements ITecnologiaPersistencePort {
 
 
 
-//    @Override
-//    public List<Tecnologia> getAllTecnologias() {
-//        return tecnologiaRepository.findAll()
-//                .stream()
-//                .map(tecnologiaEntityMapper::toModel)
-//                .collect(Collectors.toList());
-//    }
+
 }
