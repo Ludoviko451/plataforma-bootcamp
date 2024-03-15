@@ -3,11 +3,11 @@ package com.pragma.arquetipobootcamp2024.adapters.driving.http.controller;
 
 
 import com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.request.AddTecnologiaRequest;
+import com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.request.UpdateTecnologiaRequest;
 import com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.response.TecnologiaResponse;
 import com.pragma.arquetipobootcamp2024.adapters.driving.http.mapper.ITecnologiaRequestMapper;
 import com.pragma.arquetipobootcamp2024.adapters.driving.http.mapper.ITecnologiaResponseMapper;
 import com.pragma.arquetipobootcamp2024.domain.api.ITecnologiaServicePort;
-import com.pragma.arquetipobootcamp2024.domain.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +40,19 @@ public class TecnologiaRestControllerAdapter {
     public ResponseEntity<List<TecnologiaResponse>> getAllTecnologias(
             @RequestParam Integer page,
             @RequestParam(defaultValue = "5") Integer size,
-            @RequestParam String sortBy) {
+            @RequestParam(required = false) String sortBy) {
         return ResponseEntity.ok(tecnologiaResponseMapper.toTecnologiaResponseList(tecnologiaServicePort.getAllTecnologias(page, size, sortBy)));
     }
 
+    @PutMapping("/")
+    public ResponseEntity<TecnologiaResponse> updateProduct(@RequestBody UpdateTecnologiaRequest request) {
+        return ResponseEntity.ok(tecnologiaResponseMapper.toTecnologiaResponse(
+                tecnologiaServicePort.updateTecnologia(tecnologiaRequestMapper.updateRequestToTecnologia(request))
+        ));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        tecnologiaServicePort.deleteTecnologia(id);
+        return ResponseEntity.noContent().build();
+    }
 }

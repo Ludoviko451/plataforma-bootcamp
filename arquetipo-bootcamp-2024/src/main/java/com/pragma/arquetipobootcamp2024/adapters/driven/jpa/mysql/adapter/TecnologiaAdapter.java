@@ -3,9 +3,10 @@ package com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.adapter;
 
 import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.entity.TecnologiaEntity;
 
+import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.ElementNotFoundException;
+import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.mapper.ITecnologiaEntityMapper;
 import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.repository.ITecnologiaRepository;
-import com.pragma.arquetipobootcamp2024.domain.model.Product;
 import com.pragma.arquetipobootcamp2024.domain.model.Tecnologia;
 import com.pragma.arquetipobootcamp2024.domain.spi.ITecnologiaPersistencePort;
 import org.springframework.data.domain.PageRequest;
@@ -41,6 +42,15 @@ public class TecnologiaAdapter implements ITecnologiaPersistencePort {
     }
 
     @Override
+    public void deleteTecnologia(Long id) {
+
+        if (tecnologiaRepository.findById(id).isEmpty()) {
+            throw new ElementNotFoundException();
+        }
+        tecnologiaRepository.deleteById(id);
+    }
+
+    @Override
     public Tecnologia findByName(String name) {
         TecnologiaEntity tecnologiaEntity = tecnologiaRepository.findByNombre(name);
         return tecnologiaEntity != null ? tecnologiaEntityMapper.toModel(tecnologiaEntity) : null;
@@ -48,21 +58,38 @@ public class TecnologiaAdapter implements ITecnologiaPersistencePort {
 
     @Override
     public List<Tecnologia> getAllTecnologias(Integer page, Integer size, String sortBy) {
-        Sort.Direction direction = Sort.Direction.ASC;
-        String sortField = "nombre"; // Campo predeterminado
 
-        if ("desc".equalsIgnoreCase(sortBy)) {
-            direction = Sort.Direction.DESC;
-        } else if (!"asc".equalsIgnoreCase(sortBy)) {
-            sortField = sortBy;
+        Pageable pagination;
+        if (sortBy != null) {
+            Sort.Direction direction = Sort.Direction.ASC;
+            String sortField = "nombre"; // Campo predeterminado
+
+            if ("desc".equalsIgnoreCase(sortBy)) {
+                direction = Sort.Direction.DESC;
+            } else if (!"asc".equalsIgnoreCase(sortBy)) {
+                sortField = sortBy;
+            }
+
+            pagination = PageRequest.of(page, size, Sort.by(direction, sortField));
+        } else {
+            pagination = PageRequest.of(page, size);
         }
 
-        Pageable pagination = PageRequest.of(page, size, Sort.by(direction, sortField));
         List<TecnologiaEntity> tecnologiaEntities = tecnologiaRepository.findAll(pagination).getContent();
+
+        if (tecnologiaEntities.isEmpty()) {
+            throw new NoDataFoundException();
+        }
         return tecnologiaEntityMapper.toModelList(tecnologiaEntities);
     }
 
-
+    @Override
+    public Tecnologia updateTecnologia(Tecnologia tecnologia) {
+        if (tecnologiaRepository.findById(tecnologia.getId()).isEmpty()) {
+            throw new ElementNotFoundException();
+        }
+        return tecnologiaEntityMapper.toModel(tecnologiaRepository.save(tecnologiaEntityMapper.toEntity(tecnologia)));
+    }
 
 
 }

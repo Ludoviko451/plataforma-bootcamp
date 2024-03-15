@@ -10,7 +10,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class TecnologiaUseCaseTest {
+ class TecnologiaUseCaseTest {
 
     @Mock
     private ITecnologiaPersistencePort tecnologiaPersistencePort;

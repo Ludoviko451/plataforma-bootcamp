@@ -2,6 +2,7 @@ package com.pragma.arquetipobootcamp2024.adapters.driving.http.mapper;
 
 
 import com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.request.AddTecnologiaRequest;
+import com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.request.UpdateTecnologiaRequest;
 import com.pragma.arquetipobootcamp2024.domain.model.Tecnologia;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,4 +20,7 @@ public interface ITecnologiaRequestMapper {
 //
     @Mapping(target = "id", ignore = true)
     Tecnologia addRequestToTecnologia(AddTecnologiaRequest addTecnologiaRequest);
+
+    @Mapping(target = "id", source = "updateTecnologiaRequest.id")
+    Tecnologia updateRequestToTecnologia(UpdateTecnologiaRequest updateTecnologiaRequest);
 }
