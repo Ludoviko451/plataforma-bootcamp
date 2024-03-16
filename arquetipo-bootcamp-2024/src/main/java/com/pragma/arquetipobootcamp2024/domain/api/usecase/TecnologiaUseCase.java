@@ -7,6 +7,7 @@ import com.pragma.arquetipobootcamp2024.domain.model.Tecnologia;
 import com.pragma.arquetipobootcamp2024.domain.spi.ITecnologiaPersistencePort;
 
 import java.util.List;
+import java.util.Optional;
 
 //  Clase que implementa la lógica de negocio relacionada con las operaciones de tecnología.
 // Utiliza el puerto de persistencia para interactuar con la capa de almacenamiento de datos.
@@ -26,14 +27,14 @@ public class TecnologiaUseCase implements ITecnologiaServicePort {
 
     @Override
     public void saveTecnologia(Tecnologia tecnologia) {
-
         // Verificar si la tecnología ya existe en la base de datos
-        if (tecnologiaPersistencePort.findByName(tecnologia.getNombre()) != null) {
-            // Log de depuración
+        Optional<Tecnologia> existingTecnologia = tecnologiaPersistencePort.findByName(tecnologia.getNombre());
+        if (existingTecnologia.isPresent()) {
+            // Log de depuración o lanzar una excepción según sea necesario
             throw new TechnologyAlreadyExistsException();
         }
 
-        // Guardar la tecnología si esta correcto
+        // Guardar la tecnología si está correcto
         tecnologiaPersistencePort.saveTecnologia(tecnologia);
     }
 

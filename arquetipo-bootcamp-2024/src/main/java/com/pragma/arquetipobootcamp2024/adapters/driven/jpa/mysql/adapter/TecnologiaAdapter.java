@@ -15,7 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+import java.util.Optional;
 
 
 // Adaptador que implementa el puerto de persistencia de tecnologías.
@@ -51,10 +51,11 @@ public class TecnologiaAdapter implements ITecnologiaPersistencePort {
     }
 
     @Override
-    public Tecnologia findByName(String name) {
+    public Optional<Tecnologia> findByName(String name) {
         TecnologiaEntity tecnologiaEntity = tecnologiaRepository.findByNombre(name);
-        return tecnologiaEntity != null ? tecnologiaEntityMapper.toModel(tecnologiaEntity) : null;
+        return tecnologiaEntity != null ? Optional.of(tecnologiaEntityMapper.toModel(tecnologiaEntity)) : Optional.empty();
     }
+
 
     @Override
     public List<Tecnologia> getAllTecnologias(Integer page, Integer size, String sortBy) {
