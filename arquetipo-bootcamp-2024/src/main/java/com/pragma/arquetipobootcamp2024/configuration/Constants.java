@@ -13,4 +13,8 @@ public class Constants {
 
     public static final String TECHNOLOGY_ALREADY_EXISTS_EXCEPTION_MESSAGE = "La tecnologia que tu quieres crear ya existe";
 
+    public static final String TECHNOLOGY_IDS_IS_EMPTY_MESSAGE = "Las ids de las tecnologias no pueden estar vacias";
+
+    public static final String TECHNOLOGY_IDS_PASS_THE_LIMIT_MESSAGE = "Las ids ingresadas deben ser minimo 3 y maximo 20";
+    public static final String DUPLICATE_IDS_TECHNOLOGY_IDS_EXCEPTION = "Porfavor no ingrese duplicados en la lista de tecnologias";
 }

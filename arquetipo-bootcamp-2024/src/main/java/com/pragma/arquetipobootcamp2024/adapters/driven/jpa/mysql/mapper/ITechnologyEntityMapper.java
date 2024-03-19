@@ -1,8 +1,8 @@
 package com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.mapper;
 
 
-import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.entity.TecnologiaEntity;
-import com.pragma.arquetipobootcamp2024.domain.model.Tecnologia;
+import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.entity.TechnologyEntity;
+import com.pragma.arquetipobootcamp2024.domain.model.Technology;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -14,7 +14,7 @@ import java.util.List;
 // y los modelos de dominio (que representan los datos en la lógica de negocio de la aplicación).
 
 @Mapper(componentModel = "spring")
-public interface ITecnologiaEntityMapper {
+public interface ITechnologyEntityMapper {
 
 
 //  Convierte una entidad JPA de tecnología a un modelo de dominio de tecnología.
@@ -22,20 +22,20 @@ public interface ITecnologiaEntityMapper {
 //  @return El modelo de dominio de tecnología.
 
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "nombre", target = "nombre")
-    @Mapping(source = "descripcion", target = "descripcion")
-    Tecnologia toModel(TecnologiaEntity tecnologiaEntity);
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "description", target = "description")
+    Technology toModel(TechnologyEntity technologyEntity);
 
 //  Convierte un modelo de dominio de tecnología a una entidad JPA de tecnología.
 //  @param tecnologia El modelo de dominio de tecnología.
 //  @return La entidad JPA de tecnología.
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "nombre", target = "nombre")
-    @Mapping(source = "descripcion", target = "descripcion")
-    TecnologiaEntity toEntity(Tecnologia tecnologia);
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "description", target = "description")
+    TechnologyEntity toEntity(Technology technology);
 
 //  Convierte una lista de entidades JPA de tecnología a una lista de modelos de dominio de tecnología.
 //  @param tecnologiaEntities La lista de entidades JPA de tecnología.
 //  @return La lista de modelos de dominio de tecnología.
-    List<Tecnologia> toModelList(List<TecnologiaEntity> tecnologiaEntities);
+    List<Technology> toModelList(List<TechnologyEntity> tecnologiaEntities);
 }

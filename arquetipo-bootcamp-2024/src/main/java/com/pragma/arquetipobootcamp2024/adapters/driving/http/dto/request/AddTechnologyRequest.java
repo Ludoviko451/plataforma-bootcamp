@@ -21,15 +21,15 @@ import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @Getter
-public class AddTecnologiaRequest {
+public class AddTechnologyRequest {
 
     @Size(max = 50, message = "El nombre de la tecnologia debe tener una longitud menor a 50 caracteres")
     @NotBlank(message = "La Tecnologia debe tener un nombre")
-    private final String nombre;
+    private final String name;
 
     @Size(max = 90, message = "La descripcion de la tecnologia debe tener una longitud menor a 90 caracteres")
     @NotBlank(message = "La Tecnologia debe tener una descripcion")
-    private final String descripcion;
+    private final String description;
 
 
 }

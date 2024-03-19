@@ -5,27 +5,29 @@ package com.pragma.arquetipobootcamp2024.domain.model;
 //id, nombre y descripción, y proporciona métodos para acceder a estos atributos.
 //Este tipo de clase es comúnmente utilizada para modelar objetos en el dominio de una aplicación.
 
-public class Tecnologia {
+public class Technology {
 
     private final Long id;
-    private final String nombre;
-    private final String descripcion;
+    private final String name;
+    private final String description;
 
-    public Tecnologia(Long id, String nombre, String descripcion) {
+    public Technology(Long id, String name, String description) {
         this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.name = name;
+        this.description = description;
     }
+
+
 
     public Long getId() {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescription() {
+        return description;
     }
 }

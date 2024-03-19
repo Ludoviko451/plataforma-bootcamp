@@ -41,6 +41,22 @@ public class ControllerAdvisor {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @ExceptionHandler(TechnologyIdsSizeIsNotInTheLimitException.class)
+    public ResponseEntity<ExceptionResponse> handleTechnologyIdsIsNotInTheLimitException(TechnologyIdsSizeIsNotInTheLimitException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.TECHNOLOGY_IDS_PASS_THE_LIMIT_MESSAGE, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
+    @ExceptionHandler(TechnologyIdsIsEmptyException.class)
+    public ResponseEntity<ExceptionResponse> handleTechnologyIdsIsEmptyException(TechnologyIdsIsEmptyException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.TECHNOLOGY_IDS_IS_EMPTY_MESSAGE, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(DuplicateTechnologyIdsException.class)
+    public ResponseEntity<ExceptionResponse> handleDuplicateTechnologyIdsException(DuplicateTechnologyIdsException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.DUPLICATE_IDS_TECHNOLOGY_IDS_EXCEPTION, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
     @ExceptionHandler(NoDataFoundException.class)
     public ResponseEntity<ExceptionResponse> handleNoDataFoundException() {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(

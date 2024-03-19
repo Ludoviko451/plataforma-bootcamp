@@ -3,28 +3,28 @@ package com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.response;
 
 // Esta clase define un DTO (Data Transfer Object) llamado TecnologiaResponse, el cual representa la respuesta
 // de una solicitud HTTP que obtiene información sobre una tecnología.
-public class TecnologiaResponse {
+public class TechnologyResponse {
 
     private final Long id;
-    private final String nombre;
-    private final String descripcion;
+    private final String name;
+    private final String description;
 
-    public TecnologiaResponse(Long id, String nombre, String descripcion) {
+    public TechnologyResponse(Long id, String name, String description) {
         this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.name = name;
+        this.description = description;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescription() {
+        return description;
     }
 
 
