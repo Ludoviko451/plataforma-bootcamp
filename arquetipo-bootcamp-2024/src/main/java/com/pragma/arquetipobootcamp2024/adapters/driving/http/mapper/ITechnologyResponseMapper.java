@@ -1,6 +1,7 @@
 package com.pragma.arquetipobootcamp2024.adapters.driving.http.mapper;
 
 
+import com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.response.TechnologyCapacityResponse;
 import com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.response.TechnologyResponse;
 import com.pragma.arquetipobootcamp2024.domain.model.Technology;
 import org.mapstruct.Mapper;

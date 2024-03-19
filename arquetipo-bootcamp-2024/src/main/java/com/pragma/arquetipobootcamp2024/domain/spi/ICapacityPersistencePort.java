@@ -1,5 +1,6 @@
 package com.pragma.arquetipobootcamp2024.domain.spi;
 
+import com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.response.CapacityResponse;
 import com.pragma.arquetipobootcamp2024.domain.model.Capacity;
 
 import java.util.List;

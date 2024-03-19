@@ -4,6 +4,8 @@ import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.Dupl
 import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyIdsIsEmptyException;
 import com.pragma.arquetipobootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyIdsSizeIsNotInTheLimitException;
+import com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.response.CapacityResponse;
+import com.pragma.arquetipobootcamp2024.adapters.driving.http.dto.response.TechnologyResponse;
 import com.pragma.arquetipobootcamp2024.domain.api.ICapacityServicePort;
 import com.pragma.arquetipobootcamp2024.domain.model.Capacity;
 import com.pragma.arquetipobootcamp2024.domain.model.Technology;
@@ -47,6 +49,32 @@ public class CapacityUseCase implements ICapacityServicePort {
 
         return capacityFilter;
     }
+
+//    @Override
+//    public List<CapacityResponse> getAllCapacity(Integer page, Integer size, String orderBy, int technologies) {
+//        List<Capacity> capacityList = capacityPersistencePort.getAllCapacity(page, size, orderBy, technologies);
+//        List<CapacityResponse> capacityResponses = new ArrayList<>();
+//
+//        for (Capacity capacity : capacityList) {
+//
+//            List<TechnologyResponse> technologyResponses = new ArrayList<>();
+//            for (Technology technology : capacity.getTechnologyList()) {
+//                TechnologyResponse technologyResponse = new TechnologyResponse();
+//                technologyResponse.setId(technology.getId());
+//                technologyResponse.setName(technology.getName());
+//                technologyResponses.add(technologyResponse);
+//            }
+//            CapacityResponse capacityResponse = new CapacityResponse(capacity.getId(), capacity.getName(), capacity.getDescription(), technologyResponses);
+//
+//            capacityResponses.add(capacityResponse);
+//        }
+//
+//        if (capacityList.isEmpty()) {
+//            throw new NoDataFoundException();
+//        }
+//
+//        return capacityResponses;
+//    }
 
     @Override
     public void saveCapacity(Capacity capacity) {
